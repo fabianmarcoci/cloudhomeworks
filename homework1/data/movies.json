@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "title": "Inception",
+    "year": 2010,
+    "director": "Christopher Nolan",
+    "genre_id": 1,
+    "status": "watched",
+    "rating": 9.3,
+    "review": "Mind-bending plot with incredible visual direction."
+  },
+  {
+    "id": 2,
+    "title": "Interstellar",
+    "year": 2014,
+    "director": "Christopher Nolan",
+    "genre_id": 1,
+    "status": "watched",
+    "rating": 8.6,
+    "review": "Emotionally powerful and scientifically ambitious."
+  },
+  {
+    "id": 3,
+    "title": "Parasite",
+    "year": 2019,
+    "director": "Bong Joon-ho",
+    "genre_id": 3,
+    "status": "watched",
+    "rating": 9.1,
+    "review": "A masterpiece in social commentary and storytelling."
+  },
+  {
+    "id": 4,
+    "title": "The Dark Knight",
+    "year": 2008,
+    "director": "Christopher Nolan",
+    "genre_id": 2,
+    "status": "watched",
+    "rating": 9.0,
+    "review": "Heath Ledger's Joker is one of cinema's greatest performances."
+  },
+  {
+    "id": 5,
+    "title": "Dune: Part Two",
+    "year": 2024,
+    "director": "Denis Villeneuve",
+    "genre_id": 1,
+    "status": "plan_to_watch",
+    "rating": null,
+    "review": ""
+  }
+]

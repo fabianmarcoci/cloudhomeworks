@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Science Fiction",
+    "description": "Movies involving futuristic technology, space exploration, or alternate realities"
+  },
+  {
+    "id": 2,
+    "name": "Thriller",
+    "description": "Suspenseful films designed to keep the audience on edge"
+  },
+  {
+    "id": 3,
+    "name": "Drama",
+    "description": "Character-driven stories with emotional and realistic narratives"
+  },
+  {
+    "id": 4,
+    "name": "Animation",
+    "description": "Movies produced using animated techniques"
+  }
+]

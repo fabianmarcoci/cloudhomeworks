@@ -1,0 +1,360 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Movie Watchlist API",
+    "description": "A RESTful API for managing a personal movie watchlist. Supports movies and genres resources.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Genres",
+      "item": [
+        {
+          "name": "GET all genres",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/genres",
+              "host": ["{{base_url}}"],
+              "path": ["genres"]
+            },
+            "description": "Returns the full list of genres."
+          }
+        },
+        {
+          "name": "GET genre by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/genres/1",
+              "host": ["{{base_url}}"],
+              "path": ["genres", "1"]
+            },
+            "description": "Returns the genre whose id = 1."
+          }
+        },
+        {
+          "name": "GET genre not found",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/genres/999",
+              "host": ["{{base_url}}"],
+              "path": ["genres", "999"]
+            },
+            "description": "Expected 404 – genre does not exist."
+          }
+        },
+        {
+          "name": "POST create genre",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Horror\",\n  \"description\": \"Movies designed to frighten and unsettle the viewer\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/genres",
+              "host": ["{{base_url}}"],
+              "path": ["genres"]
+            },
+            "description": "Creates a new genre. Returns 201 with the created object."
+          }
+        },
+        {
+          "name": "POST create genre – duplicate",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Drama\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/genres",
+              "host": ["{{base_url}}"],
+              "path": ["genres"]
+            },
+            "description": "Expected 409 – Drama already exists."
+          }
+        },
+        {
+          "name": "PUT update genre",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Drama\",\n  \"description\": \"Emotionally driven stories with realistic, relatable characters\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/genres/3",
+              "host": ["{{base_url}}"],
+              "path": ["genres", "3"]
+            },
+            "description": "Fully replaces genre id=3. Returns 200 with updated object."
+          }
+        },
+        {
+          "name": "PUT update genre – not found",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Western\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/genres/999",
+              "host": ["{{base_url}}"],
+              "path": ["genres", "999"]
+            },
+            "description": "Expected 404."
+          }
+        },
+        {
+          "name": "DELETE genre",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/genres/4",
+              "host": ["{{base_url}}"],
+              "path": ["genres", "4"]
+            },
+            "description": "Deletes genre id=4 (Animation – not referenced by any movie). Returns 200."
+          }
+        },
+        {
+          "name": "DELETE genre – referenced by movies",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/genres/1",
+              "host": ["{{base_url}}"],
+              "path": ["genres", "1"]
+            },
+            "description": "Expected 409 – Science Fiction is still used by several movies."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies",
+      "item": [
+        {
+          "name": "GET all movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            },
+            "description": "Returns all movies in the watchlist."
+          }
+        },
+        {
+          "name": "GET movies – filter by status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?status=watched",
+              "host": ["{{base_url}}"],
+              "path": ["movies"],
+              "query": [
+                { "key": "status", "value": "watched" }
+              ]
+            },
+            "description": "Returns only movies with status=watched."
+          }
+        },
+        {
+          "name": "GET movies – filter by genre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies?genre_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["movies"],
+              "query": [
+                { "key": "genre_id", "value": "1" }
+              ]
+            },
+            "description": "Returns only movies belonging to genre id=1 (Science Fiction)."
+          }
+        },
+        {
+          "name": "GET movie by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/1",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "1"]
+            },
+            "description": "Returns the movie whose id = 1."
+          }
+        },
+        {
+          "name": "GET movie – not found",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "999"]
+            },
+            "description": "Expected 404."
+          }
+        },
+        {
+          "name": "POST add movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Blade Runner 2049\",\n  \"year\": 2017,\n  \"director\": \"Denis Villeneuve\",\n  \"genre_id\": 1,\n  \"status\": \"watched\",\n  \"rating\": 8.0,\n  \"review\": \"Visually stunning and deeply philosophical sequel.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            },
+            "description": "Adds a new movie. Returns 201 with the created object."
+          }
+        },
+        {
+          "name": "POST add movie – missing field",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Oppenheimer\",\n  \"year\": 2023\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            },
+            "description": "Expected 400 – required fields are missing."
+          }
+        },
+        {
+          "name": "POST add movie – invalid genre",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Unknown Film\",\n  \"year\": 2020,\n  \"director\": \"Someone\",\n  \"genre_id\": 999,\n  \"status\": \"plan_to_watch\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movies",
+              "host": ["{{base_url}}"],
+              "path": ["movies"]
+            },
+            "description": "Expected 404 – genre 999 does not exist."
+          }
+        },
+        {
+          "name": "PUT update movie",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dune: Part Two\",\n  \"year\": 2024,\n  \"director\": \"Denis Villeneuve\",\n  \"genre_id\": 1,\n  \"status\": \"watched\",\n  \"rating\": 8.8,\n  \"review\": \"A spectacular continuation of the Dune saga.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movies/5",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "5"]
+            },
+            "description": "Updates movie id=5 (marks it as watched with a rating). Returns 200."
+          }
+        },
+        {
+          "name": "PUT update movie – not found",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Ghost Movie\",\n  \"year\": 2000,\n  \"director\": \"Nobody\",\n  \"genre_id\": 2,\n  \"status\": \"plan_to_watch\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "999"]
+            },
+            "description": "Expected 404."
+          }
+        },
+        {
+          "name": "DELETE movie",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/5",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "5"]
+            },
+            "description": "Deletes movie id=5. Returns 200 with a confirmation message."
+          }
+        },
+        {
+          "name": "DELETE movie – not found",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/movies/999",
+              "host": ["{{base_url}}"],
+              "path": ["movies", "999"]
+            },
+            "description": "Expected 404."
+          }
+        }
+      ]
+    }
+  ]
+}
