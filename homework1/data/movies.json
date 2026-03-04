@@ -38,15 +38,5 @@
     "status": "watched",
     "rating": 9.0,
     "review": "Heath Ledger's Joker is one of cinema's greatest performances."
-  },
-  {
-    "id": 5,
-    "title": "Dune: Part Two",
-    "year": 2024,
-    "director": "Denis Villeneuve",
-    "genre_id": 1,
-    "status": "plan_to_watch",
-    "rating": null,
-    "review": ""
   }
 ]

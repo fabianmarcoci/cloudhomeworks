@@ -176,38 +176,6 @@
           }
         },
         {
-          "name": "GET movies – filter by status",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/movies?status=watched",
-              "host": ["{{base_url}}"],
-              "path": ["movies"],
-              "query": [
-                { "key": "status", "value": "watched" }
-              ]
-            },
-            "description": "Returns only movies with status=watched."
-          }
-        },
-        {
-          "name": "GET movies – filter by genre",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/movies?genre_id=1",
-              "host": ["{{base_url}}"],
-              "path": ["movies"],
-              "query": [
-                { "key": "genre_id", "value": "1" }
-              ]
-            },
-            "description": "Returns only movies belonging to genre id=1 (Science Fiction)."
-          }
-        },
-        {
           "name": "GET movie by ID",
           "request": {
             "method": "GET",
