@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Board</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {  
+            background-color: #0d0d1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c9a84c;
+            text-shadow: 0 0 10px #c9a84c88;
+            letter-spacing: 3px;
+        }
+
+        header p {
+            color: #888;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .add-form {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 40px;
+        }
+
+        .add-form h2 {
+            color: #c9a84c;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .form-row input, .form-row select {
+            flex: 1;
+            min-width: 140px;
+            padding: 10px 14px;
+            background: #0d0d1a;
+            border: 1px solid #3a3a5a;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+        }
+
+        .form-row input::placeholder { color: #555; }
+
+        .form-row button {
+            padding: 10px 24px;
+            background: #c9a84c;
+            color: #0d0d1a;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .form-row button:hover { background: #e0c060; }
+
+        .leaderboard h2 {
+            color: #c9a84c;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            background: #1a1a2e;
+            color: #c9a84c;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        thead th { padding: 12px 16px; text-align: left; }
+
+        tbody tr {
+            border-bottom: 1px solid #1a1a2e;
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover { background: #1a1a2e; }
+
+        tbody td { padding: 12px 16px; }
+
+        .rank { color: #888; font-size: 0.85rem; }
+        .rank-1 { color: #ffd700; font-weight: bold; }
+        .rank-2 { color: #c0c0c0; font-weight: bold; }
+        .rank-3 { color: #cd7f32; font-weight: bold; }
+
+        .class-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .class-warrior { background: #3a1a1a; color: #e05050; }
+        .class-mage    { background: #1a1a3a; color: #5080e0; }
+        .class-rogue   { background: #1a2a1a; color: #50c050; }
+        .class-paladin { background: #2a2a1a; color: #c0c050; }
+        .class-hunter  { background: #1a2a2a; color: #50c0c0; }
+
+        .level { color: #c9a84c; font-weight: bold; }
+
+        .delete-btn {
+            background: none;
+            border: 1px solid #3a3a5a;
+            color: #888;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .delete-btn:hover { border-color: #e05050; color: #e05050; }
+
+        .empty { text-align: center; color: #555; padding: 40px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔ Character Board</h1>
+            <p>Server: {{ server_name }}</p>
+        </header>
+
+        <div class="add-form">
+            <h2>+ ADD CHARACTER</h2>
+            <form action="/add" method="POST">
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Character name" required maxlength="30">
+                    <select name="char_class" required>
+                        <option value="" disabled selected>Class</option>
+                        <option value="Warrior">Warrior</option>
+                        <option value="Mage">Mage</option>
+                        <option value="Rogue">Rogue</option>
+                        <option value="Paladin">Paladin</option>
+                        <option value="Hunter">Hunter</option>
+                    </select>
+                    <input type="number" name="level" placeholder="Level" min="1" max="100" required>
+                    <button type="submit">REGISTER</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="leaderboard">
+            <h2>LEADERBOARD</h2>
+            {% if characters %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Level</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for char in characters %}
+                    <tr>
+                        <td class="rank {% if loop.index == 1 %}rank-1{% elif loop.index == 2 %}rank-2{% elif loop.index == 3 %}rank-3{% endif %}">
+                            {{ loop.index }}
+                        </td>
+                        <td>{{ char.name }}</td>
+                        <td>
+                            <span class="class-badge class-{{ char.class | lower }}">
+                                {{ char.class }}
+                            </span>
+                        </td>
+                        <td class="level">{{ char.level }}</td>
+                        <td>
+                            <form action="/delete/{{ char.id }}" method="POST">
+                                <button class="delete-btn" type="submit">remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="empty">No characters yet. Be the first to register!</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

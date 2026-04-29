@@ -31,12 +31,22 @@
   },
   {
     "id": 4,
-    "title": "The Dark Knight",
-    "year": 2008,
-    "director": "Christopher Nolan",
-    "genre_id": 2,
+    "title": "Dune: Part Two",
+    "year": 2024,
+    "director": "Denis Villeneuve",
+    "genre_id": 1,
     "status": "watched",
-    "rating": 9.0,
-    "review": "Heath Ledger's Joker is one of cinema's greatest performances."
+    "rating": 8.8,
+    "review": "A spectacular continuation of the Dune saga."
+  },
+  {
+    "id": 5,
+    "title": "Blade Runner 2049",
+    "year": 2017,
+    "director": "Denis Villeneuve",
+    "genre_id": 1,
+    "status": "watched",
+    "rating": 8.0,
+    "review": "Visually stunning and deeply philosophical sequel."
   }
 ]
